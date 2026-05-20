@@ -34,7 +34,6 @@ skillFilters.forEach((button) => {
   });
 });
 
-// Project filtering removed: portfolio link now points to external site instead
 
 let techFocusEnabled = false;
 if (focusTechBtn) {
