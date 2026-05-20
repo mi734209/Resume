@@ -1,13 +1,12 @@
 const skillItems = Array.from(document.querySelectorAll('.skills-list li'));
-const projectItems = Array.from(document.querySelectorAll('.project-list li'));
 const skillFilters = Array.from(document.querySelectorAll('.skill-filter'));
-const projectFilters = Array.from(document.querySelectorAll('.project-filter'));
 const focusTechBtn = document.getElementById('focusTechBtn');
 const jobs = Array.from(document.querySelectorAll('.job'));
 
 const skillCountEl = document.getElementById('skillCount');
-const projectCountEl = document.getElementById('projectCount');
 const certCountEl = document.getElementById('certCount');
+
+const downloadBtn = document.getElementById('downloadBtn');
 
 function updateMetrics() {
   const languageCount = skillItems.filter((item) => item.dataset.category === 'language').length;
@@ -15,7 +14,6 @@ function updateMetrics() {
   const certCount = skillItems.filter((item) => item.dataset.category === 'cert').length;
 
   skillCountEl.textContent = String(languageCount + toolCount);
-  projectCountEl.textContent = String(projectItems.length);
   certCountEl.textContent = String(certCount);
 }
 
@@ -36,21 +34,11 @@ skillFilters.forEach((button) => {
   });
 });
 
-projectFilters.forEach((button) => {
-  button.addEventListener('click', () => {
-    const filter = button.dataset.projectFilter;
-    setActiveButton(projectFilters, button);
-
-    projectItems.forEach((item) => {
-      const type = item.dataset.projectType;
-      const match = filter === 'all' || filter === type;
-      item.classList.toggle('dimmed', !match);
-    });
-  });
-});
+// Project filtering removed: portfolio link now points to external site instead
 
 let techFocusEnabled = false;
-focusTechBtn.addEventListener('click', () => {
+if (focusTechBtn) {
+  focusTechBtn.addEventListener('click', () => {
   techFocusEnabled = !techFocusEnabled;
 
   jobs.forEach((job) => {
@@ -63,6 +51,13 @@ focusTechBtn.addEventListener('click', () => {
   focusTechBtn.textContent = techFocusEnabled
     ? 'Show All Roles'
     : 'Highlight Technical Roles';
-});
+  });
+}
 
 updateMetrics();
+
+if (downloadBtn) {
+  downloadBtn.addEventListener('click', () => {
+    window.print();
+  });
+}
